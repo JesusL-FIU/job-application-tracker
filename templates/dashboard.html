@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Job Application Tracker</title>
+</head>
+<body>
+    <h1>Job Application Tracker</h1>
+
+    <h2>Dashboard</h2>
+
+    <p>Total applications submitted: {{ stats.count }}</p>
+    <p>Total companies with positions: {{ companies.count }}</p>
+    <p>Total jobs available : {{ jobs.count }}</p>
+    <br><p>Application Status</p>
+    {% for item in status %}
+        <p>{{ item.status }}: {{ item.count }}</p>
+    {% endfor %}
+
+</body>
+</html>
