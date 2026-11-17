@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect
 import mysql.connector
-import databse
+import database
 app = Flask(__name__)
 
 def get_db():
@@ -31,7 +31,7 @@ def dashboard():
 #FLASK ROUTES FOR COMPANIES AND ITS CRUD FUNCTIONS
 @app.route('/companies')
 def companies():
-    companies = databse.read_companies()
+    companies = database.read_companies()
     return render_template('companies.html', companies=companies)
 
 @app.route('/companies/create', methods=['POST'])
@@ -42,7 +42,7 @@ def create_company():
     city = request.form['city'] or None
     state = request.form['state'] or None
     notes = request.form['notes']or None
-    databse.create_companies(company_name, industry, website, city, state, notes)
+    database.create_companies(company_name, industry, website, city, state, notes)
     return redirect('/companies')
 
 @app.route('/companies/update', methods=['POST'])
@@ -54,20 +54,20 @@ def update_company():
     city = request.form['city']
     state = request.form['state']
     notes = request.form['notes']
-    databse.update_companies(company_id, company_name, industry, website, city, state, notes)
+    database.update_companies(company_id, company_name, industry, website, city, state, notes)
     return redirect('/companies')
 
 @app.route('/companies/delete', methods=['POST'])
 def delete_company():
     company_id = request.form['company_id']
-    databse.delete_companies(company_id)
+    database.delete_companies(company_id)
     return redirect('/companies')
 
 #FLASK ROUTES FOR COMPANIES AND ITS CRUD FUNCTIONS
 @app.route('/jobs')
 def jobs():
-    jobs = databse.read_jobs()
-    companies = databse.read_companies()
+    jobs = database.read_jobs()
+    companies = database.read_companies()
     return render_template('jobs.html', jobs=jobs, companies=companies)
 
 @app.route('/jobs/create', methods=['POST'])
@@ -80,7 +80,7 @@ def create_jobs():
     job_url = request.form['job_url'] or None
     date_posted = request.form['date_posted']
     requirements = request.form['requirements'] or None
-    databse.create_jobs(company_id, job_title, job_type, salary_min, salary_max, job_url, date_posted, requirements)
+    database.create_jobs(company_id, job_title, job_type, salary_min, salary_max, job_url, date_posted, requirements)
     return redirect('/jobs')
 
 @app.route('/jobs/update', methods=['POST'])
@@ -94,13 +94,13 @@ def update_jobs():
     job_url = request.form['job_url'] or None
     date_posted = request.form['date_posted']
     requirements = request.form['requirements'] or None
-    databse.update_jobs(job_id, company_id, job_title, job_type, salary_min, salary_max, job_url, date_posted, requirements)
+    database.update_jobs(job_id, company_id, job_title, job_type, salary_min, salary_max, job_url, date_posted, requirements)
     return redirect('/jobs')
 
 @app.route('/jobs/delete', methods=['POST'])
 def delete_job():
     job_id = request.form['job_id']
-    databse.delete_jobs(job_id)
+    database.delete_jobs(job_id)
     return redirect('/jobs')
 
 if __name__ == '__main__':
