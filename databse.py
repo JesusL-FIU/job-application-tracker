@@ -45,23 +45,41 @@ def delete_companies(company_id):
     conn.close()
 
 #CRUD TABLE FOR job
-def create_jobs():
-    cursor = get_db().cursor()
+def create_jobs(company_id, job_title, job_type, salary_min, salary_max, job_url, date_posted, requirements):
+    conn = get_db()
+    cursor = conn.cursor()
+    sql = "INSERT INTO jobs (company_id, job_title, job_type, salary_min, salary_max, job_url, date_posted, requirements) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
+    cursor.execute(sql, (company_id, job_title, job_type, salary_min, salary_max, job_url, date_posted, requirements))
+    conn.commit()
+    cursor.close()
+    conn.close()
 
 def read_jobs():
     conn = get_db()
     cursor = conn.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM jobs")
+    cursor.execute("SELECT jobs.*, companies.company_name FROM jobs INNER JOIN companies ON jobs.company_id = companies.company_id")
     jobs = cursor.fetchall()
     cursor.close()
     conn.close()
     return jobs
 
-def update_jobs():
-    cursor = get_db().cursor()
+def update_jobs(job_id, company_id, job_title, job_type, salary_min, salary_max, job_url, date_posted, requirements):
+    conn = get_db()
+    cursor = conn.cursor()
+    sql = "UPDATE jobs SET company_id=%s, job_title=%s, job_type=%s, salary_min=%s, salary_max=%s, job_url=%s, date_posted=%s, requirements=%s WHERE job_id=%s"
+    cursor.execute(sql, (company_id, job_title, job_type, salary_min,salary_max, job_url, date_posted, requirements, job_id))
+    conn.commit()
+    cursor.close()
+    conn.close()
 
-def delete_jobs():
-    cursor = get_db().cursor()
+def delete_jobs(job_id):
+    conn = get_db()
+    cursor = conn.cursor()
+    sql = "DELETE FROM jobs WHERE job_id=%s"
+    cursor.execute(sql, (job_id,))
+    conn.commit()
+    cursor.close()
+    conn.close()
 
 #CRUD TABLE FOR applications
 def create_applicants():

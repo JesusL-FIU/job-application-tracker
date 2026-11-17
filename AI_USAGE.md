@@ -18,4 +18,6 @@ remove redundant programming.
 - Always test AI code it never works great at first.
 - Asking why the AI programs it one way and not the other way helps me understand concepts
 - Ask the AI after it gives the answer "is this correct", sometimes it will correct itself if it spots a mistake
-- 
+- Using AI for the companies CRUD flask routes taught me its best to create a different flask route for
+each different CRUD operation than combing everything under one flask route. When separating them it is easier
+to find which one went wrong and how. Combining them will make it harder to find errors. 

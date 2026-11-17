@@ -37,11 +37,11 @@ def companies():
 @app.route('/companies/create', methods=['POST'])
 def create_company():
     company_name = request.form['company_name']
-    industry = request.form['industry']
-    website = request.form['website']
-    city = request.form['city']
-    state = request.form['state']
-    notes = request.form['notes']
+    industry = request.form['industry'] or None
+    website = request.form['website'] or None
+    city = request.form['city'] or None
+    state = request.form['state'] or None
+    notes = request.form['notes']or None
     databse.create_companies(company_name, industry, website, city, state, notes)
     return redirect('/companies')
 
@@ -62,6 +62,46 @@ def delete_company():
     company_id = request.form['company_id']
     databse.delete_companies(company_id)
     return redirect('/companies')
+
+#FLASK ROUTES FOR COMPANIES AND ITS CRUD FUNCTIONS
+@app.route('/jobs')
+def jobs():
+    jobs = databse.read_jobs()
+    companies = databse.read_companies()
+    return render_template('jobs.html', jobs=jobs, companies=companies)
+
+@app.route('/jobs/create', methods=['POST'])
+def create_jobs():
+    company_id = request.form['company_id']
+    job_title = request.form['job_title']
+    job_type = request.form['job_type']
+    salary_min = request.form['salary_min']
+    salary_max = request.form['salary_max']
+    job_url = request.form['job_url'] or None
+    date_posted = request.form['date_posted']
+    requirements = request.form['requirements'] or None
+    databse.create_jobs(company_id, job_title, job_type, salary_min, salary_max, job_url, date_posted, requirements)
+    return redirect('/jobs')
+
+@app.route('/jobs/update', methods=['POST'])
+def update_jobs():
+    job_id = request.form['job_id']
+    company_id = request.form['company_id']
+    job_title = request.form['job_title']
+    job_type = request.form['job_type']
+    salary_min = request.form['salary_min']
+    salary_max = request.form['salary_max']
+    job_url = request.form['job_url'] or None
+    date_posted = request.form['date_posted']
+    requirements = request.form['requirements'] or None
+    databse.update_jobs(job_id, company_id, job_title, job_type, salary_min, salary_max, job_url, date_posted, requirements)
+    return redirect('/jobs')
+
+@app.route('/jobs/delete', methods=['POST'])
+def delete_job():
+    job_id = request.form['job_id']
+    databse.delete_jobs(job_id)
+    return redirect('/jobs')
 
 if __name__ == '__main__':
     app.run(debug=True)
