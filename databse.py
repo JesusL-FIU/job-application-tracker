@@ -8,8 +8,13 @@ def get_db():
     )
 
 #CRUD TABLE FOR Companies
-def create_companies():
+def create_companies(company_name, industry, website, city, state, notes):
     conn = get_db()
+    cursor = conn.cursor()
+    sql = "INSERT INTO companies (company_name, industry, website, city, state, notes) VALUES (%s, %s, %s, %s, %s, %s)"
+    cursor.execute(sql, (company_name, industry, website, city, state, notes))
+    conn.commit()
+    cursor.close()
     conn.close()
 
 def read_companies():
@@ -21,11 +26,23 @@ def read_companies():
     conn.close()
     return companies
 
-def update_companies():
-    cursor = get_db().cursor()
+def update_companies(company_id, company_name, industry, website, city, state, notes):
+    conn = get_db()
+    cursor = conn.cursor()
+    sql = "UPDATE companies SET company_name=%s, industry=%s, website=%s, city=%s, state=%s, notes=%s WHERE company_id=%s"
+    cursor.execute(sql, (company_name, industry, website, city, state, notes, company_id))
+    conn.commit()
+    cursor.close()
+    conn.close()
 
-def delete_companies():
-    cursor = get_db().cursor()
+def delete_companies(company_id):
+    conn = get_db()
+    cursor = conn.cursor()
+    sql = "DELETE FROM companies WHERE company_id=%s"
+    cursor.execute(sql, (company_id,))
+    conn.commit()
+    cursor.close()
+    conn.close()
 
 #CRUD TABLE FOR job
 def create_jobs():
