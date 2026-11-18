@@ -22,11 +22,14 @@ def dashboard():
     cursor.execute('SELECT COUNT(*) as count FROM jobs')
     jobs = cursor.fetchone()
 
+    cursor.execute('SELECT COUNT(*) as count FROM contacts')
+    contacts = cursor.fetchone()
+
     cursor.execute('SELECT status, COUNT(*) AS count From applications GROUP BY status')
     status = cursor.fetchall()
 
     conn.close()
-    return render_template('dashboard.html', stats=stats, companies=companies, jobs=jobs, status=status)
+    return render_template('dashboard.html', stats=stats, companies=companies, jobs=jobs, contacts=contacts, status=status)
 
 #FLASK ROUTES FOR COMPANIES AND ITS CRUD FUNCTIONS
 @app.route('/companies')
