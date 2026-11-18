@@ -116,7 +116,7 @@
 </form>
 
 <h2>Delete Application</h2>
-<form action="/application/delete" method="POST">
+<form action="/application/delete" method="POST" onsubmit="return confirm('Delete Confirmation?');">
 
     <label>Application ID:</label>
     <input type="number" name="application_id" required>

@@ -102,7 +102,7 @@
 </form>
 
 <h2>Delete Contact</h2>
-<form action="/contacts/delete" method="POST">
+<form action="/contacts/delete" method="POST" onsubmit="return confirm('Delete Confirmation?');">
 
     <label>Contact ID:</label>
     <input type="number" name="contact_id" required>

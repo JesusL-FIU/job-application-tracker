@@ -82,7 +82,7 @@
 </form>
 
 <h2>Delete Company</h2>
-<form action="/companies/delete" method="POST">
+<form action="/companies/delete" method="POST" onsubmit="return confirm('Delete Confirmation?');">
 
     <label>Company ID:</label>
     <input type="number" name="company_id" required>
