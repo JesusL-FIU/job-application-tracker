@@ -54,32 +54,51 @@
     <input type="submit" value="Add Company">
 
 </form>
-<h2>Update Company</h2>
-<form action="/companies/update" method="POST">
+
+<h2 id="update-company">Update Company</h2>
+<form action="/companies#update-company" method="GET">
 
     <label>Company ID:</label>
-    <input type="number" name="company_id" required>
+    <input type="number" name="load_id" required>
+
+    <input type="submit" value="Load Company">
+
+</form>
+{% if edit_company %}
+
+<form action="/companies/update" method="POST">
+
+    <input type="hidden" name="company_id"
+           value="{{ edit_company.company_id }}">
 
     <label>Company Name:</label>
-    <input type="text" name="company_name" required>
+    <input type="text" name="company_name"
+           value="{{ edit_company.company_name }}" required>
 
     <label>Industry:</label>
-    <input type="text" name="industry">
+    <input type="text" name="industry"
+           value="{{ edit_company.industry or '' }}">
 
     <label>Website:</label>
-    <input type="text" name="website">
+    <input type="text" name="website"
+           value="{{ edit_company.website or '' }}">
 
     <label>City:</label>
-    <input type="text" name="city">
+    <input type="text" name="city"
+           value="{{ edit_company.city or '' }}">
 
     <label>State:</label>
-    <input type="text" name="state">
+    <input type="text" name="state"
+           value="{{ edit_company.state or '' }}">
 
     <label>Notes:</label>
-    <textarea name="notes"></textarea>
+    <textarea name="notes">{{ edit_company.notes or '' }}</textarea>
 
     <input type="submit" value="Update Company">
+
 </form>
+
+{% endif %}
 
 <h2>Delete Company</h2>
 <form action="/companies/delete" method="POST" onsubmit="return confirm('Delete Confirmation?');">

@@ -70,56 +70,76 @@
     <input type="date" name="date_posted">
 
     <label>Requirements:</label>
-    <textarea name="requirements"></textarea>
+    <textarea name="requirements" placeholder='Must write like this ["Example", "Example 2"]'></textarea>
 
     <input type="submit" value="Add Job">
 
 
 </form>
 
-<h2>Update Job</h2>
-<form action="/jobs/update" method="POST">
+<h2 id="update-job">Update Job</h2>
+<form action="/jobs#update-job" method="GET">
 
     <label>Job ID:</label>
-    <input type="number" name="job_id" required>
+    <input type="number" name="load_id" required>
+
+    <input type="submit" value="Load Job">
+
+</form>
+
+{% if edit_job %}
+
+<form action="/jobs/update" method="POST">
+
+    <input type="hidden" name="job_id"
+           value="{{ edit_job.job_id }}">
 
     <label>Company ID:</label>
     <select name="company_id" required>
         {% for i in companies %}
-        <option value="{{ i.company_id }}">
+        <option value="{{ i.company_id }}"
+            {% if i.company_id == edit_job.company_id %}selected{% endif %}>
             (ID: {{ i.company_id }}) {{ i.company_name }}
         </option>
         {% endfor %}
     </select>
 
     <label>Job Title:</label>
-    <input type="text" name="job_title" required>
+    <input type="text" name="job_title"
+           value="{{ edit_job.job_title }}" required>
 
     <label>Job Type:</label>
     <select name="job_type">
-        <option value="Full-time">Full-time</option>
-        <option value="Part-time">Part-time</option>
-        <option value="Contract">Contract</option>
-        <option value="Internship">Internship</option>
+        <option value="Full-time" {% if edit_job.job_type == 'Full-time' %}selected{% endif %}>Full-time</option>
+        <option value="Part-time" {% if edit_job.job_type == 'Part-time' %}selected{% endif %}>Part-time</option>
+        <option value="Contract" {% if edit_job.job_type == 'Contract' %}selected{% endif %}>Contract</option>
+        <option value="Internship" {% if edit_job.job_type == 'Internship' %}selected{% endif %}>Internship</option>
     </select>
 
     <label>Minimum Salary:</label>
-    <input type="number" name="salary_min">
+    <input type="number" name="salary_min"
+           value="{{ edit_job.salary_min if edit_job.salary_min is not none else '' }}">
 
     <label>Maximum Salary:</label>
-    <input type="number" name="salary_max">
+    <input type="number" name="salary_max"
+           value="{{ edit_job.salary_max if edit_job.salary_max is not none else '' }}">
 
     <label>Job URL:</label>
-    <input type="text" name="job_url">
+    <input type="text" name="job_url"
+           value="{{ edit_job.job_url or '' }}">
 
     <label>Date Posted:</label>
-    <input type="date" name="date_posted">
+    <input type="date" name="date_posted"
+           value="{{ edit_job.date_posted.strftime('%Y-%m-%d') if edit_job.date_posted else '' }}">
 
     <label>Requirements:</label>
-    <textarea name="requirements"></textarea>
+    <textarea name="requirements" placeholder='Must write like this ["Example", "Example 2"]'>{{ edit_job.requirements or '' }} </textarea>
 
     <input type="submit" value="Update Job">
+
 </form>
+
+{% endif %}
 
 <h2>Delete Job</h2>
 <form action="/jobs/delete" method="POST" onsubmit="return confirm('Delete Confirmation?');">

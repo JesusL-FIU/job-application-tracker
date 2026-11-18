@@ -66,54 +66,70 @@
     </select>
 
     <label>Interview Data:</label>
-    <textarea name="interview_data"></textarea>
+    <textarea name="interview_data" placeholder='Must write like this ["Example", "Example 2"]'></textarea>
 
     <input type="submit" value="Add Applications">
 
 </form>
-<h2>Update Application</h2>
-<form action="/application/update" method="POST">
+
+<h2 id="update-application">Update Application</h2>
+<form action="/applications#update-application" method="GET">
 
     <label>Application ID:</label>
-    <input type="number" name="application_id" required>
+    <input type="number" name="load_id" required>
+
+    <input type="submit" value="Load Application">
+
+</form>
+
+{% if edit_application %}
+<form action="/application/update" method="POST">
+
+    <input type="hidden" name="application_id"
+           value="{{ edit_application.application_id }}">
 
     <label>Job ID:</label>
     <select name="job_id" required>
         {% for i in jobs %}
-        <option value="{{ i.job_id }}">
+        <option value="{{ i.job_id }}"
+            {% if edit_application.job_id == i.job_id %}selected{% endif %}>
             (ID: {{ i.job_id }}) {{ i.job_title }}
         </option>
         {% endfor %}
     </select>
 
     <label>Application Date:</label>
-    <input type="date" name="application_date" required>
+    <input type="date" name="application_date"
+           value="{{ edit_application.application_date }}" required>
 
     <label>Status:</label>
     <select name="status" required>
-        <option value="Applied">Applied</option>
-        <option value="Screening">Screening</option>
-        <option value="Interview">Interview</option>
-        <option value="Offer">Offer</option>
-        <option value="Rejected">Rejected</option>
-        <option value="Withdrawn">Withdrawn</option>
+        <option value="Applied" {% if edit_application.status == 'Applied' %}selected{% endif %}>Applied</option>
+        <option value="Screening" {% if edit_application.status == 'Screening' %}selected{% endif %}>Screening</option>
+        <option value="Interview" {% if edit_application.status == 'Interview' %}selected{% endif %}>Interview</option>
+        <option value="Offer" {% if edit_application.status == 'Offer' %}selected{% endif %}>Offer</option>
+        <option value="Rejected" {% if edit_application.status == 'Rejected' %}selected{% endif %}>Rejected</option>
+        <option value="Withdrawn" {% if edit_application.status == 'Withdrawn' %}selected{% endif %}>Withdrawn</option>
     </select>
 
     <label>Resume Version:</label>
-    <input type="text" name="resume_version">
+    <input type="text" name="resume_version"
+           value="{{ edit_application.resume_version or '' }}">
 
     <label>Cover Letter Sent:</label>
     <select name="cover_letter_sent" required>
-        <option value="1">Yes</option>
-        <option value="0">No</option>
+        <option value="1" {% if edit_application.cover_letter_sent == 1 %}selected{% endif %}>Yes</option>
+        <option value="0" {% if edit_application.cover_letter_sent == 0 %}selected{% endif %}>No</option>
     </select>
 
     <label>Interview Data:</label>
-    <textarea name="interview_data"></textarea>
+    <textarea name="interview_data" placeholder='Must write like this ["Example", "Example 2"]'>{{ edit_application.interview_data or '' }}</textarea>
 
-    <input type="submit" value="Update Applications">
+    <input type="submit" value="Update Application">
 
 </form>
+
+{% endif %}
 
 <h2>Delete Application</h2>
 <form action="/application/delete" method="POST" onsubmit="return confirm('Delete Confirmation?');">

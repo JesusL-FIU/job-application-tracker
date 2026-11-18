@@ -35,7 +35,15 @@ def dashboard():
 @app.route('/companies')
 def companies():
     companies = database.read_companies()
-    return render_template('companies.html', companies=companies)
+    edit_company = None
+    company_id = request.args.get('load_id')
+    if company_id:
+        for company in companies:
+            if str(company['company_id']) == company_id:
+                edit_company = company
+                break
+    return render_template('companies.html', companies=companies, edit_company=edit_company
+    )
 
 @app.route('/companies/create', methods=['POST'])
 def create_company():
@@ -71,7 +79,14 @@ def delete_company():
 def jobs():
     jobs = database.read_jobs()
     companies = database.read_companies()
-    return render_template('jobs.html', jobs=jobs, companies=companies)
+    edit_job = None
+    job_id = request.args.get('load_id')
+    if job_id:
+        for job in jobs:
+            if str(job['job_id']) == job_id:
+                edit_job = job
+                break
+    return render_template('jobs.html', jobs=jobs, companies=companies,edit_job=edit_job)
 
 @app.route('/jobs/create', methods=['POST'])
 def create_jobs():
@@ -107,12 +122,22 @@ def delete_job():
     return redirect('/jobs')
 
 #FLASK ROUTES FOR applications AND ITS CRUD FUNCTIONS
+
 @app.route('/applications')
 def applications():
     applications = database.read_applications()
     jobs = database.read_jobs()
     companies = database.read_companies()
-    return render_template('applications.html', applications=applications, jobs=jobs, comapnies=companies)
+    edit_application = None
+    application_id = request.args.get('load_id')
+    if application_id:
+        for application in applications:
+            if str(application['application_id']) == application_id:
+                edit_application = application
+                break
+
+    return render_template('applications.html', applications=applications, jobs=jobs, companies=companies, edit_application=edit_application)
+
 
 @app.route('/application/create', methods=['POST'])
 def create_applications():
@@ -143,12 +168,20 @@ def delete_application():
     database.delete_applications(application_id)
     return redirect('/applications')
 
-#FLASK ROUTES FOR contacts AND ITS CRUD FUNCTIONS
+#FLASK ROUTES FOR contacts AND ITS CRUD FUNCTIONS@app.route('/contacts')
 @app.route('/contacts')
 def contacts():
     contacts = database.read_contacts()
     companies = database.read_companies()
-    return render_template('contacts.html', contacts=contacts, companies=companies)
+    edit_contact = None
+    contact_id = request.args.get('load_id')
+    if contact_id:
+        for contact in contacts:
+            if str(contact['contact_id']) == contact_id:
+                edit_contact = contact
+                break
+
+    return render_template('contacts.html', contacts=contacts, companies=companies, edit_contact=edit_contact)
 
 @app.route('/contacts/create', methods=['POST'])
 def create_contact():
@@ -180,6 +213,14 @@ def delete_contact():
     contact_id = request.form['contact_id']
     database.delete_contacts(contact_id)
     return redirect('/contacts')
+
+@app.route('/job_match')
+def job_match():
+    return render_template('job_match.html')
+
+@app.route('/jobs_match/search', methods=['POST'])
+def jobs_search():
+    return redirect('/job_match')
 
 if __name__ == '__main__':
     app.run(debug=True)
