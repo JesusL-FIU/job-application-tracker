@@ -82,23 +82,41 @@ def delete_jobs(job_id):
     conn.close()
 
 #CRUD TABLE FOR applications
-def create_applicants():
-    cursor = get_db().cursor()
-
-def read_applicants():
+def create_applications(job_id, application_date, status, resume_version, cover_letter_sent, interview_data ):
     conn = get_db()
-    cursor = conn.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM applicanats")
-    applicants = cursor.fetchall()
+    cursor = conn.cursor()
+    sql = "INSERT INTO applications (job_id, application_date, status, resume_version, cover_letter_sent, interview_data) VALUES (%s, %s, %s, %s, %s, %s)"
+    cursor.execute(sql, (job_id, application_date, status, resume_version, cover_letter_sent, interview_data))
+    conn.commit()
     cursor.close()
     conn.close()
-    return applicants
 
-def update_applications():
-    cursor = get_db().cursor()
+def read_applications():
+    conn = get_db()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("SELECT applications.*, jobs.job_title, companies.company_name FROM applications INNER JOIN jobs ON applications.job_id = jobs.job_id INNER JOIN companies ON jobs.company_id = companies.company_id")
+    applications = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return applications
 
-def delete_applicants():
-    cursor = get_db().cursor()
+def update_applications(application_id, job_id, application_date, status, resume_version, cover_letter_sent, interview_data):
+    conn = get_db()
+    cursor = conn.cursor()
+    sql = "UPDATE applications SET job_id=%s, application_date=%s, status=%s, resume_version=%s, cover_letter_sent=%s, interview_data=%s WHERE application_id=%s"
+    cursor.execute(sql, (job_id, application_date, status, resume_version, cover_letter_sent,interview_data, application_id))
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+def delete_applications(application_id):
+    conn = get_db()
+    cursor = conn.cursor()
+    sql = "DELETE FROM applications WHERE application_id=%s"
+    cursor.execute(sql, (application_id,))
+    conn.commit()
+    cursor.close()
+    conn.close()
 
 #CRUD JOB FOR contacts
 def create_contacts():

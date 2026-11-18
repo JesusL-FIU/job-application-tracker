@@ -103,5 +103,43 @@ def delete_job():
     database.delete_jobs(job_id)
     return redirect('/jobs')
 
+#FLASK ROUTES FOR applications AND ITS CRUD FUNCTIONS
+@app.route('/applications')
+def applications():
+    applications = database.read_applications()
+    jobs = database.read_jobs()
+    companies = database.read_companies()
+    return render_template('applications.html', applications=applications, jobs=jobs, comapnies=companies)
+
+@app.route('/application/create', methods=['POST'])
+def create_applications():
+    job_id = request.form['job_id']
+    application_date = request.form['application_date']
+    status = request.form['status']
+    resume_version = request.form['resume_version']
+    cover_letter_sent = request.form['cover_letter_sent'] or None
+    interview_data = request.form['interview_data'] or None
+    database.create_applications(job_id, application_date, status, resume_version, cover_letter_sent, interview_data)
+    return redirect('/applications')
+
+@app.route('/application/update', methods=['POST'])
+def update_applications():
+    application_id = request.form['application_id']
+    job_id = request.form['job_id']
+    application_date = request.form['application_date']
+    status = request.form['status']
+    resume_version = request.form['resume_version']
+    cover_letter_sent = request.form['cover_letter_sent']
+    interview_data = request.form['interview_data'] or None
+    database.update_applications(application_id, job_id, application_date, status, resume_version, cover_letter_sent, interview_data)
+    return redirect('/applications')
+
+@app.route('/application/delete', methods=['POST'])
+def delete_application():
+    application_id = request.form['application_id']
+    database.delete_applications(application_id)
+    return redirect('/applications')
+
+
 if __name__ == '__main__':
     app.run(debug=True)
