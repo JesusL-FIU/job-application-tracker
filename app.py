@@ -49,11 +49,11 @@ def create_company():
 def update_company():
     company_id = request.form['company_id']
     company_name = request.form['company_name']
-    industry = request.form['industry']
-    website = request.form['website']
-    city = request.form['city']
-    state = request.form['state']
-    notes = request.form['notes']
+    industry = request.form['industry'] or None
+    website = request.form['website'] or None
+    city = request.form['city'] or None
+    state = request.form['state'] or None
+    notes = request.form['notes'] or None
     database.update_companies(company_id, company_name, industry, website, city, state, notes)
     return redirect('/companies')
 
@@ -74,11 +74,11 @@ def jobs():
 def create_jobs():
     company_id = request.form['company_id']
     job_title = request.form['job_title']
-    job_type = request.form['job_type']
-    salary_min = request.form['salary_min']
-    salary_max = request.form['salary_max']
+    job_type = request.form['job_type'] or None
+    salary_min = request.form['salary_min'] or None
+    salary_max = request.form['salary_max'] or None
     job_url = request.form['job_url'] or None
-    date_posted = request.form['date_posted']
+    date_posted = request.form['date_posted'] or None
     requirements = request.form['requirements'] or None
     database.create_jobs(company_id, job_title, job_type, salary_min, salary_max, job_url, date_posted, requirements)
     return redirect('/jobs')
@@ -88,11 +88,11 @@ def update_jobs():
     job_id = request.form['job_id']
     company_id = request.form['company_id']
     job_title = request.form['job_title']
-    job_type = request.form['job_type']
-    salary_min = request.form['salary_min']
-    salary_max = request.form['salary_max']
+    job_type = request.form['job_type'] or None
+    salary_min = request.form['salary_min'] or None
+    salary_max = request.form['salary_max'] or None
     job_url = request.form['job_url'] or None
-    date_posted = request.form['date_posted']
+    date_posted = request.form['date_posted'] or None
     requirements = request.form['requirements'] or None
     database.update_jobs(job_id, company_id, job_title, job_type, salary_min, salary_max, job_url, date_posted, requirements)
     return redirect('/jobs')
@@ -115,8 +115,8 @@ def applications():
 def create_applications():
     job_id = request.form['job_id']
     application_date = request.form['application_date']
-    status = request.form['status']
-    resume_version = request.form['resume_version']
+    status = request.form['status'] or None
+    resume_version = request.form['resume_version'] or None
     cover_letter_sent = request.form['cover_letter_sent'] or None
     interview_data = request.form['interview_data'] or None
     database.create_applications(job_id, application_date, status, resume_version, cover_letter_sent, interview_data)
@@ -127,9 +127,9 @@ def update_applications():
     application_id = request.form['application_id']
     job_id = request.form['job_id']
     application_date = request.form['application_date']
-    status = request.form['status']
-    resume_version = request.form['resume_version']
-    cover_letter_sent = request.form['cover_letter_sent']
+    status = request.form['status'] or None
+    resume_version = request.form['resume_version'] or None
+    cover_letter_sent = request.form['cover_letter_sent'] or None
     interview_data = request.form['interview_data'] or None
     database.update_applications(application_id, job_id, application_date, status, resume_version, cover_letter_sent, interview_data)
     return redirect('/applications')
@@ -153,7 +153,7 @@ def create_contact():
     contact_name = request.form['contact_name']
     title = request.form['title'] or None
     email = request.form['email'] or None
-    phone = request.form['phone']
+    phone = request.form['phone'] or None
     linkedin_url = request.form['linkedin_url'] or None
     notes = request.form['notes'] or None
     database.create_contacts(company_id, contact_name, title, email, phone, linkedin_url, notes)
@@ -166,7 +166,7 @@ def update_contact():
     contact_name = request.form['contact_name']
     title = request.form['title'] or None
     email = request.form['email'] or None
-    phone = request.form['phone']
+    phone = request.form['phone'] or None
     linkedin_url = request.form['linkedin_url'] or None
     notes = request.form['notes'] or None
     database.update_contacts(contact_id, company_id, contact_name, title, email, phone, linkedin_url, notes)
