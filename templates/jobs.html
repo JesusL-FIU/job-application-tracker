@@ -70,7 +70,7 @@
     <input type="date" name="date_posted">
 
     <label>Requirements:</label>
-    <textarea name="requirements" placeholder='Must write like this ["Example", "Example 2"]'></textarea>
+    <textarea name="requirements" placeholder='Must type like the requirements column'></textarea>
 
     <input type="submit" value="Add Job">
 
@@ -133,7 +133,7 @@
            value="{{ edit_job.date_posted.strftime('%Y-%m-%d') if edit_job.date_posted else '' }}">
 
     <label>Requirements:</label>
-    <textarea name="requirements" placeholder='Must write like this ["Example", "Example 2"]'>{{ edit_job.requirements or '' }} </textarea>
+    <textarea name="requirements" placeholder='Must type like the requirements column'>{{ edit_job.requirements or '' }} </textarea>
 
     <input type="submit" value="Update Job">
 

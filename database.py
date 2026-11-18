@@ -1,4 +1,5 @@
 import mysql.connector
+import json
 
 #ESTABLISH CONNECTION TO DATABASE
 def get_db():
@@ -156,6 +157,65 @@ def delete_contacts(contact_id):
     cursor.close()
     conn.close()
 
+#compare skills to requirements
+def job_match(user_skills):
+    conn = get_db()
+    cursor = conn.cursor(dictionary=True)
+    user_skills = [skill.strip().lower() for skill in user_skills.split(',') if skill.strip()]
+    sql= ("SELECT jobs.*, companies.company_name FROM jobs JOIN companies ON jobs.company_id = companies.company_id WHERE jobs.requirements IS NOT NULL")
+    cursor.execute(sql)
+    jobs = cursor.fetchall()
+
+    #AI HELP and wrote the job matching logic and comparing it with entered skills
+    matching_jobs = []
+
+    for job in jobs:
+
+        requirements = job['requirements']
+
+        # Convert JSON string into a Python dictionary if necessary
+        if isinstance(requirements, str):
+            requirements = json.loads(requirements)
+
+        # Get required skills from the JSON
+        required_skills = requirements.get('required_skills', [])
+
+        # Find matched skills
+        matched_skills = [
+            skill for skill in required_skills
+            if skill.lower() in user_skills
+        ]
+
+        # Find missing skills
+        missing_skills = [
+            skill for skill in required_skills
+            if skill.lower() not in user_skills
+        ]
+
+        # Calculate match percentage
+        if required_skills:
+            percentage = round(
+                len(matched_skills) / len(required_skills) * 100
+            )
+        else:
+            percentage = 0
+
+        job['matched_skills'] = matched_skills
+        job['missing_skills'] = missing_skills
+        job['match_percentage'] = percentage
+        job['total_skills'] = len(required_skills)
+
+        matching_jobs.append(job)
+
+    # Sort from highest match to lowest
+    matching_jobs.sort(
+        key=lambda job: job['match_percentage'],
+        reverse=True
+    )
+
+    cursor.close()
+    conn.close()
+    return matching_jobs
 
 
 

@@ -216,11 +216,13 @@ def delete_contact():
 
 @app.route('/job_match')
 def job_match():
-    return render_template('job_match.html')
+    return render_template('job_match.html', matching_jobs=None)
 
 @app.route('/jobs_match/search', methods=['POST'])
 def jobs_search():
-    return redirect('/job_match')
+    user_skills = request.form['skills']
+    matching_jobs = database.job_match(user_skills)
+    return render_template('job_match.html', matching_jobs=matching_jobs, user_skills=user_skills.split(','))
 
 if __name__ == '__main__':
     app.run(debug=True)
