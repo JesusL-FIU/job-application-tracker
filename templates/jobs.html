@@ -1,137 +1,133 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Jobs</title>
-</head>
-<body>
-    <h1>Jobs</h1>
+{% extends 'base.html' %}
 
-    <h2>List of Jobs</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Job ID</th>
-                <th>Company Name</th>
-                <th>Job Title</th>
-                <th>Job Type</th>
-                <th>Salary Minium</th>
-                <th>Salary Maximum</th>
-                <th>Job URL</th>
-                <th>Date Posted</th>
-                <th>Requirements</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for i in jobs %}
-                <tr>
-                    <td>{{ i.job_id }}</td>
-                    <td>{{ i.company_name }}</td>
-                    <td>{{ i.job_title }}</td>
-                    <td>{{ i.job_type }}</td>
-                    <td>{{ i.salary_min }}</td>
-                    <td>{{ i.salary_max }}</td>
-                    <td>{{ i.job_url }}</td>
-                    <td>{{ i.date_posted }}</td>
-                    <td>{{ i.requirements }}</td>
-                </tr>
-                {% endfor %}
-        </tbody>
-    </table>
-    <br>
-    <br>
-    <h2>Add Job</h2>
-    <form action="/jobs/create" method="POST">
+{% block content %}
+<h1>Jobs</h1>
 
-        <label>Company ID:</label>
-        <select name="company_id" required>
-            {% for i in companies %}
-                <option value="{{ i.company_id }}">
-                    (ID: {{ i.company_id }}) {{ i.company_name }}
-                </option>
-            {% endfor %}
-        </select>
+<h2>List of Jobs</h2>
+<table>
+    <thead>
+    <tr>
+        <th>Job ID</th>
+        <th>Company Name</th>
+        <th>Job Title</th>
+        <th>Job Type</th>
+        <th>Salary Minium</th>
+        <th>Salary Maximum</th>
+        <th>Job URL</th>
+        <th>Date Posted</th>
+        <th>Requirements</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for i in jobs %}
+    <tr>
+        <td>{{ i.job_id }}</td>
+        <td>{{ i.company_name }}</td>
+        <td>{{ i.job_title }}</td>
+        <td>{{ i.job_type }}</td>
+        <td>{{ i.salary_min }}</td>
+        <td>{{ i.salary_max }}</td>
+        <td>{{ i.job_url }}</td>
+        <td>{{ i.date_posted }}</td>
+        <td>{{ i.requirements }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<br>
+<br>
+<h2>Add Job</h2>
+<form action="/jobs/create" method="POST">
 
-        <label>Job Title:</label>
-        <input type="text" name="job_title" required>
+    <label>Company ID:</label>
+    <select name="company_id" required>
+        {% for i in companies %}
+        <option value="{{ i.company_id }}">
+            (ID: {{ i.company_id }}) {{ i.company_name }}
+        </option>
+        {% endfor %}
+    </select>
 
-        <label>Job Type:</label>
-        <select name="job_type">
-            <option value="Full-time">Full-time</option>
-            <option value="Part-time">Part-time</option>
-            <option value="Contract">Contract</option>
-            <option value="Internship">Internship</option>
-        </select>
+    <label>Job Title:</label>
+    <input type="text" name="job_title" required>
 
-        <label>Minimum Salary:</label>
-        <input type="number" name="salary_min">
+    <label>Job Type:</label>
+    <select name="job_type">
+        <option value="Full-time">Full-time</option>
+        <option value="Part-time">Part-time</option>
+        <option value="Contract">Contract</option>
+        <option value="Internship">Internship</option>
+    </select>
 
-        <label>Maximum Salary:</label>
-        <input type="number" name="salary_max">
+    <label>Minimum Salary:</label>
+    <input type="number" name="salary_min">
 
-        <label>Job URL:</label>
-        <input type="text" name="job_url">
+    <label>Maximum Salary:</label>
+    <input type="number" name="salary_max">
 
-        <label>Date Posted:</label>
-        <input type="date" name="date_posted">
+    <label>Job URL:</label>
+    <input type="text" name="job_url">
 
-        <label>Requirements:</label>
-        <textarea name="requirements"></textarea>
+    <label>Date Posted:</label>
+    <input type="date" name="date_posted">
 
-        <button type="submit">Add Job</button>
+    <label>Requirements:</label>
+    <textarea name="requirements"></textarea>
 
-    </form>
+    <input type="submit" value="Add Job">
 
-    <h2>Update Job</h2>
-    <form action="/jobs/update" method="POST">
 
-        <label>Job ID:</label>
-        <input type="number" name="job_id" required>
+</form>
 
-        <label>Company ID:</label>
-        <select name="company_id" required>
-            {% for i in companies %}
-                <option value="{{ i.company_id }}">
-                    (ID: {{ i.company_id }}) {{ i.company_name }}
-                </option>
-            {% endfor %}
-        </select>
+<h2>Update Job</h2>
+<form action="/jobs/update" method="POST">
 
-        <label>Job Title:</label>
-        <input type="text" name="job_title" required>
+    <label>Job ID:</label>
+    <input type="number" name="job_id" required>
 
-        <label>Job Type:</label>
-        <select name="job_type">
-            <option value="Full-time">Full-time</option>
-            <option value="Part-time">Part-time</option>
-            <option value="Contract">Contract</option>
-            <option value="Internship">Internship</option>
-        </select>
+    <label>Company ID:</label>
+    <select name="company_id" required>
+        {% for i in companies %}
+        <option value="{{ i.company_id }}">
+            (ID: {{ i.company_id }}) {{ i.company_name }}
+        </option>
+        {% endfor %}
+    </select>
 
-        <label>Minimum Salary:</label>
-        <input type="number" name="salary_min">
+    <label>Job Title:</label>
+    <input type="text" name="job_title" required>
 
-        <label>Maximum Salary:</label>
-        <input type="number" name="salary_max">
+    <label>Job Type:</label>
+    <select name="job_type">
+        <option value="Full-time">Full-time</option>
+        <option value="Part-time">Part-time</option>
+        <option value="Contract">Contract</option>
+        <option value="Internship">Internship</option>
+    </select>
 
-        <label>Job URL:</label>
-        <input type="text" name="job_url">
+    <label>Minimum Salary:</label>
+    <input type="number" name="salary_min">
 
-        <label>Date Posted:</label>
-        <input type="date" name="date_posted">
+    <label>Maximum Salary:</label>
+    <input type="number" name="salary_max">
 
-        <label>Requirements:</label>
-        <textarea name="requirements"></textarea>
+    <label>Job URL:</label>
+    <input type="text" name="job_url">
 
-        <button type="submit">Update</button>
-    </form>
+    <label>Date Posted:</label>
+    <input type="date" name="date_posted">
 
-    <h2>Delete Job</h2>
-    <form action="/jobs/delete" method="POST">
+    <label>Requirements:</label>
+    <textarea name="requirements"></textarea>
 
-        <label>Job ID:</label>
-        <input type="number" name="job_id" required>
-        <button type="submit">Delete</button>
-    </form>
-</body>
-</html>
+    <input type="submit" value="Update Job">
+</form>
+
+<h2>Delete Job</h2>
+<form action="/jobs/delete" method="POST">
+
+    <label>Job ID:</label>
+    <input type="number" name="job_id" required>
+    <input type="submit" class="delete-button" value="Delete Job">
+</form>
+{% endblock %}

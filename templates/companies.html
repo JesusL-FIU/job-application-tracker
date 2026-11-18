@@ -1,98 +1,93 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Companies</title>
-</head>
-<body>
-    <h1>Companies</h1>
+{% extends 'base.html' %}
 
-    <h2>List of Companies</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Company ID</th>
-                <th>Company Name</th>
-                <th>Industry</th>
-                <th>Website</th>
-                <th>City</th>
-                <th>State</th>
-                <th>Notes</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for i in companies %}
-                <tr>
-                    <td>{{ i.company_id }}</td>
-                    <td>{{ i.company_name }}</td>
-                    <td>{{ i.industry }}</td>
-                    <td>{{ i.website }}</td>
-                    <td>{{ i.city }}</td>
-                    <td>{{ i.state }}</td>
-                    <td>{{ i.notes }}</td>
-                </tr>
-                {% endfor %}
-        </tbody>
-    </table>
-    <br>
-    <br>
-    <h2>Add Company</h2>
-    <form action="/companies/create" method="POST">
+{% block content %}
+<h1>Companies</h1>
 
-        <label>Company Name:</label>
-        <input type="text" name="company_name" required>
+<h2>List of Companies</h2>
+<table>
+    <thead>
+    <tr>
+        <th>Company ID</th>
+        <th>Company Name</th>
+        <th>Industry</th>
+        <th>Website</th>
+        <th>City</th>
+        <th>State</th>
+        <th>Notes</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for i in companies %}
+    <tr>
+        <td>{{ i.company_id }}</td>
+        <td>{{ i.company_name }}</td>
+        <td>{{ i.industry }}</td>
+        <td>{{ i.website }}</td>
+        <td>{{ i.city }}</td>
+        <td>{{ i.state }}</td>
+        <td>{{ i.notes }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<br>
+<br>
+<h2>Add Company</h2>
+<form action="/companies/create" method="POST">
 
-        <label>Industry:</label>
-        <input type="text" name="industry">
+    <label>Company Name:</label>
+    <input type="text" name="company_name" required>
 
-        <label>Website:</label>
-        <input type="text" name="website">
+    <label>Industry:</label>
+    <input type="text" name="industry">
 
-        <label>City:</label>
-        <input type="text" name="city">
+    <label>Website:</label>
+    <input type="text" name="website">
 
-        <label>State:</label>
-        <input type="text" name="state">
+    <label>City:</label>
+    <input type="text" name="city">
 
-        <label>Notes:</label>
-        <textarea name="notes"></textarea>
+    <label>State:</label>
+    <input type="text" name="state">
 
-        <button type="submit">Add Company</button>
+    <label>Notes:</label>
+    <textarea name="notes"></textarea>
 
-    </form>
-    <h2>Update Company</h2>
-    <form action="/companies/update" method="POST">
+    <input type="submit" value="Add Company">
 
-        <label>Company ID:</label>
-        <input type="number" name="company_id" required>
+</form>
+<h2>Update Company</h2>
+<form action="/companies/update" method="POST">
 
-        <label>Company Name:</label>
-        <input type="text" name="company_name" required>
+    <label>Company ID:</label>
+    <input type="number" name="company_id" required>
 
-        <label>Industry:</label>
-        <input type="text" name="industry">
+    <label>Company Name:</label>
+    <input type="text" name="company_name" required>
 
-        <label>Website:</label>
-        <input type="text" name="website">
+    <label>Industry:</label>
+    <input type="text" name="industry">
 
-        <label>City:</label>
-        <input type="text" name="city">
+    <label>Website:</label>
+    <input type="text" name="website">
 
-        <label>State:</label>
-        <input type="text" name="state">
+    <label>City:</label>
+    <input type="text" name="city">
 
-        <label>Notes:</label>
-        <textarea name="notes"></textarea>
+    <label>State:</label>
+    <input type="text" name="state">
 
-        <button type="submit">Update</button>
-    </form>
+    <label>Notes:</label>
+    <textarea name="notes"></textarea>
 
-    <h2>Delete Company</h2>
-    <form action="/companies/delete" method="POST">
+    <input type="submit" value="Update Company">
+</form>
 
-        <label>Company ID:</label>
-        <input type="number" name="company_id" required>
-        <button type="submit">Delete</button>
-    </form>
-</body>
-</html>
+<h2>Delete Company</h2>
+<form action="/companies/delete" method="POST">
+
+    <label>Company ID:</label>
+    <input type="number" name="company_id" required>
+    <input type="submit" class="delete-button" value="Delete Company">
+</form>
+{% endblock %}

@@ -1,118 +1,115 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Contacts</title>
-</head>
-<body>
-    <h1>Contacts</h1>
-    <h2>List of Contacts</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Contact ID</th>
-                <th>Company Name</th>
-                <th>Contact Name</th>
-                <th>Title</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Linkedin URL</th>
-                <th>Notes</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for i in contacts %}
-                <tr>
-                    <td>{{ i.contact_id }}</td>
-                    <td>{{ i.company_name }}</td>
-                    <td>{{ i.contact_name }}</td>
-                    <td>{{ i.title }}</td>
-                    <td>{{ i.email }}</td>
-                    <td>{{ i.phone }}</td>
-                    <td>{{ i.linkedin_url }}</td>
-                    <td>{{ i.notes }}</td>
-                </tr>
-                {% endfor %}
-        </tbody>
-    </table>
-    <br>
-    <br>
-    <h2>Add Contact</h2>
-    <form action="/contacts/create" method="POST">
+{% extends 'base.html' %}
 
-        <label>Company ID:</label>
-        <select name="company_id" required>
-            {% for i in companies %}
-                <option value="{{ i.company_id }}">
-                    (ID: {{ i.company_id }}) {{ i.company_name }}
-                </option>
-            {% endfor %}
-        </select>
+{% block content %}
 
-        <label>Contact Name:</label>
-        <input type="text" name="contact_name" required>
+<h1>Contacts</h1>
+<h2>List of Contacts</h2>
+<table>
+    <thead>
+    <tr>
+        <th>Contact ID</th>
+        <th>Company Name</th>
+        <th>Contact Name</th>
+        <th>Title</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Linkedin URL</th>
+        <th>Notes</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for i in contacts %}
+    <tr>
+        <td>{{ i.contact_id }}</td>
+        <td>{{ i.company_name }}</td>
+        <td>{{ i.contact_name }}</td>
+        <td>{{ i.title }}</td>
+        <td>{{ i.email }}</td>
+        <td>{{ i.phone }}</td>
+        <td>{{ i.linkedin_url }}</td>
+        <td>{{ i.notes }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<br>
+<br>
+<h2>Add Contact</h2>
+<form action="/contacts/create" method="POST">
 
-        <label>Title:</label>
-        <input type="text" name="title">
+    <label>Company ID:</label>
+    <select name="company_id" required>
+        {% for i in companies %}
+        <option value="{{ i.company_id }}">
+            (ID: {{ i.company_id }}) {{ i.company_name }}
+        </option>
+        {% endfor %}
+    </select>
 
-        <label>Email:</label>
-        <input type="text" name="email">
+    <label>Contact Name:</label>
+    <input type="text" name="contact_name" required>
 
-        <label>Phone:</label>
-        <input type="text" name="phone">
+    <label>Title:</label>
+    <input type="text" name="title">
 
-        <label>Linkedin URL:</label>
-        <input type="text" name="linkedin_url">
+    <label>Email:</label>
+    <input type="text" name="email">
 
-        <label>Notes:</label>
-        <textarea name="notes"></textarea>
+    <label>Phone:</label>
+    <input type="text" name="phone">
 
-        <button type="submit">Add Contact</button>
-    </form>
-    <br>
-    <br>
-    <h2>Update Contact</h2>
-    <form action="/contacts/update" method="POST">
+    <label>Linkedin URL:</label>
+    <input type="text" name="linkedin_url">
 
-        <label>Contact ID:</label>
-        <input type="number" name="contact_id" required>
+    <label>Notes:</label>
+    <textarea name="notes"></textarea>
 
-        <label>Company ID:</label>
-        <select name="company_id" required>
-            {% for i in companies %}
-                <option value="{{ i.company_id }}">
-                    (ID: {{ i.company_id }}) {{ i.company_name }}
-                </option>
-            {% endfor %}
-        </select>
+    <input type="submit" value="Add Contact">
 
-        <label>Contact Name:</label>
-        <input type="text" name="contact_name" required>
+</form>
+<br>
+<br>
+<h2>Update Contact</h2>
+<form action="/contacts/update" method="POST">
 
-        <label>Title:</label>
-        <input type="text" name="title">
+    <label>Contact ID:</label>
+    <input type="number" name="contact_id" required>
 
-        <label>Email:</label>
-        <input type="text" name="email">
+    <label>Company ID:</label>
+    <select name="company_id" required>
+        {% for i in companies %}
+        <option value="{{ i.company_id }}">
+            (ID: {{ i.company_id }}) {{ i.company_name }}
+        </option>
+        {% endfor %}
+    </select>
 
-        <label>Phone:</label>
-        <input type="text" name="phone">
+    <label>Contact Name:</label>
+    <input type="text" name="contact_name" required>
 
-        <label>Linkedin URL:</label>
-        <input type="text" name="linkedin_url">
+    <label>Title:</label>
+    <input type="text" name="title">
 
-        <label>Notes:</label>
-        <textarea name="notes"></textarea>
+    <label>Email:</label>
+    <input type="text" name="email">
 
-        <button type="submit">Update Contact</button>
-    </form>
+    <label>Phone:</label>
+    <input type="text" name="phone">
 
-    <h2>Delete Contact</h2>
-    <form action="/contacts/delete" method="POST">
+    <label>Linkedin URL:</label>
+    <input type="text" name="linkedin_url">
 
-        <label>Contact ID:</label>
-        <input type="number" name="contact_id" required>
-        <button type="submit">Delete</button>
-    </form>
-</body>
-</html>
+    <label>Notes:</label>
+    <textarea name="notes"></textarea>
+
+    <input type="submit" value="Update Contact">
+</form>
+
+<h2>Delete Contact</h2>
+<form action="/contacts/delete" method="POST">
+
+    <label>Contact ID:</label>
+    <input type="number" name="contact_id" required>
+    <input type="submit" class="delete-button" value="Delete Contact">
+</form>
+{% endblock %}
