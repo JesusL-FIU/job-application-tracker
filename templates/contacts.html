@@ -2,9 +2,117 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Contacts</title>
 </head>
 <body>
+    <h1>Contacts</h1>
+    <h2>List of Contacts</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Contact ID</th>
+                <th>Company Name</th>
+                <th>Contact Name</th>
+                <th>Title</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Linkedin URL</th>
+                <th>Notes</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in contacts %}
+                <tr>
+                    <td>{{ i.contact_id }}</td>
+                    <td>{{ i.company_name }}</td>
+                    <td>{{ i.contact_name }}</td>
+                    <td>{{ i.title }}</td>
+                    <td>{{ i.email }}</td>
+                    <td>{{ i.phone }}</td>
+                    <td>{{ i.linkedin_url }}</td>
+                    <td>{{ i.notes }}</td>
+                </tr>
+                {% endfor %}
+        </tbody>
+    </table>
+    <br>
+    <br>
+    <h2>Add Contact</h2>
+    <form action="/contacts/create" method="POST">
 
+        <label>Company ID:</label>
+        <select name="company_id" required>
+            {% for i in companies %}
+                <option value="{{ i.company_id }}">
+                    (ID: {{ i.company_id }}) {{ i.company_name }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <label>Contact Name:</label>
+        <input type="text" name="contact_name" required>
+
+        <label>Title:</label>
+        <input type="text" name="title">
+
+        <label>Email:</label>
+        <input type="text" name="email">
+
+        <label>Phone:</label>
+        <input type="text" name="phone">
+
+        <label>Linkedin URL:</label>
+        <input type="text" name="linkedin_url">
+
+        <label>Notes:</label>
+        <textarea name="notes"></textarea>
+
+        <button type="submit">Add Contact</button>
+    </form>
+    <br>
+    <br>
+    <h2>Update Contact</h2>
+    <form action="/contacts/update" method="POST">
+
+        <label>Contact ID:</label>
+        <input type="number" name="contact_id" required>
+
+        <label>Company ID:</label>
+        <select name="company_id" required>
+            {% for i in companies %}
+                <option value="{{ i.company_id }}">
+                    (ID: {{ i.company_id }}) {{ i.company_name }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <label>Contact Name:</label>
+        <input type="text" name="contact_name" required>
+
+        <label>Title:</label>
+        <input type="text" name="title">
+
+        <label>Email:</label>
+        <input type="text" name="email">
+
+        <label>Phone:</label>
+        <input type="text" name="phone">
+
+        <label>Linkedin URL:</label>
+        <input type="text" name="linkedin_url">
+
+        <label>Notes:</label>
+        <textarea name="notes"></textarea>
+
+        <button type="submit">Update Contact</button>
+    </form>
+
+    <h2>Delete Contact</h2>
+    <form action="/contacts/delete" method="POST">
+
+        <label>Contact ID:</label>
+        <input type="number" name="contact_id" required>
+        <button type="submit">Delete</button>
+    </form>
 </body>
 </html>

@@ -119,23 +119,42 @@ def delete_applications(application_id):
     conn.close()
 
 #CRUD JOB FOR contacts
-def create_contacts():
-    cursor = get_db().cursor()
+def create_contacts(company_id, contact_name, title, email, phone, linkedin_url, notes):
+    conn = get_db()
+    cursor = conn.cursor()
+    sql = "INSERT INTO contacts (company_id, contact_name, title, email, phone, linkedin_url, notes) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+    cursor.execute(sql, (company_id, contact_name, title, email, phone, linkedin_url, notes))
+    conn.commit()
+    cursor.close()
+    conn.close()
 
 def read_contacts():
-    cursor = get_db().cursor()
-
-def update_contacts():
     conn = get_db()
     cursor = conn.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM contacts")
+    sql = "SELECT contacts.*, companies.company_name FROM contacts JOIN companies ON contacts.company_id = companies.company_id"
+    cursor.execute(sql)
     contacts = cursor.fetchall()
     cursor.close()
     conn.close()
     return contacts
 
-def delete_contacts():
-    cursor = get_db().cursor()
+def update_contacts(contact_id, company_id, contact_name, title, email, phone, linkedin_url, notes):
+    conn = get_db()
+    cursor = conn.cursor()
+    sql = "UPDATE contacts SET company_id=%s, contact_name=%s, title=%s, email=%s, phone=%s, linkedin_url=%s, notes=%s WHERE contact_id=%s"
+    cursor.execute(sql, (company_id, contact_name, title, email, phone, linkedin_url, notes, contact_id))
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+def delete_contacts(contact_id):
+    conn = get_db()
+    cursor = conn.cursor()
+    sql = "DELETE FROM contacts WHERE contact_id=%s"
+    cursor.execute(sql, (contact_id,))
+    conn.commit()
+    cursor.close()
+    conn.close()
 
 
 

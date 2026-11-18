@@ -140,6 +140,43 @@ def delete_application():
     database.delete_applications(application_id)
     return redirect('/applications')
 
+#FLASK ROUTES FOR contacts AND ITS CRUD FUNCTIONS
+@app.route('/contacts')
+def contacts():
+    contacts = database.read_contacts()
+    companies = database.read_companies()
+    return render_template('contacts.html', contacts=contacts, companies=companies)
+
+@app.route('/contacts/create', methods=['POST'])
+def create_contact():
+    company_id = request.form['company_id']
+    contact_name = request.form['contact_name']
+    title = request.form['title'] or None
+    email = request.form['email'] or None
+    phone = request.form['phone']
+    linkedin_url = request.form['linkedin_url'] or None
+    notes = request.form['notes'] or None
+    database.create_contacts(company_id, contact_name, title, email, phone, linkedin_url, notes)
+    return redirect('/contacts')
+
+@app.route('/contacts/update', methods=['POST'])
+def update_contact():
+    contact_id = request.form['contact_id']
+    company_id = request.form['company_id']
+    contact_name = request.form['contact_name']
+    title = request.form['title'] or None
+    email = request.form['email'] or None
+    phone = request.form['phone']
+    linkedin_url = request.form['linkedin_url'] or None
+    notes = request.form['notes'] or None
+    database.update_contacts(contact_id, company_id, contact_name, title, email, phone, linkedin_url, notes)
+    return redirect('/contacts')
+
+@app.route('/contacts/delete', methods=['POST'])
+def delete_contact():
+    contact_id = request.form['contact_id']
+    database.delete_contacts(contact_id)
+    return redirect('/contacts')
 
 if __name__ == '__main__':
     app.run(debug=True)
