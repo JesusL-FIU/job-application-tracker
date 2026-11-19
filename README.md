@@ -17,4 +17,7 @@ search process.
 3. Go to requirements, read them, and download them for project to work. They are python dependencies
 4. Put schema.sql file and run it on MySQL so database and tables are established
 5. Click Run it, and it will take you to dashboard for you to explore the site
-6. Watch Video for demonstration and execution of project
+6. Watch Video for demonstration and execution of project (Below is the link for the video
+will also be added to project folder)
+
+https://youtu.be/mLvDEhLAftI
