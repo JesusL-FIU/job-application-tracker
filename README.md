@@ -5,8 +5,8 @@ search process.
 ## Features
 - Track companies and job listings
 - Record application submissions
-- Manage interview schedules
 - Store contact information
+- Job Match with skills
 ## Technologies
 - MySQL Database
 - Python with Flask
